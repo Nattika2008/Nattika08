@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portfolio - ณัฐติกา โพทอง (Nattika Phothong)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Prompt & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .gradient-accent {
+            background: linear-gradient(135deg, #10b981 0%, #0d9488 100%);
+        }
+        .custom-shadow {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+        .custom-shadow-hover:hover {
+            box-shadow: 0 20px 35px -5px rgba(16, 185, 129, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-slate-50/70 text-slate-800 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl z-50 flex items-center space-x-3 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">คัดลอกข้อมูลเรียบร้อยแล้ว</span>
+    </div>
+
+    <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 border-b border-slate-200/80 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-2xl gradient-accent flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <span class="font-bold text-lg tracking-wider">NP</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-slate-800 text-base leading-none tracking-tight group-hover:text-emerald-600 transition-colors">NATTIKA</span>
+                        <span class="text-[11px] text-slate-400 font-medium tracking-widest uppercase mt-0.5">Academic Portfolio</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">เกี่ยวกับฉัน</a>
+                    <a href="#profile" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">ประวัติส่วนตัว</a>
+                    <a href="#education" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">การศึกษา</a>
+                    <a href="#family" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">ครอบครัว</a>
+                    <a href="#contact" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">การติดต่อ</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleGithubModal()" class="inline-flex items-center space-x-2 text-xs font-semibold px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition-all hover:scale-105">
+                        <i class="fa-brands fa-github text-sm"></i>
+                        <span class="hidden sm:inline">วิธีลง GitHub Pages</span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-200 bg-white/95 px-5 py-4 space-y-3">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-sm font-medium text-slate-700 hover:text-emerald-600 py-1">เกี่ยวกับฉัน</a>
+            <a href="#profile" onclick="toggleMobileMenu()" class="block text-sm font-medium text-slate-700 hover:text-emerald-600 py-1">ประวัติส่วนตัว</a>
+            <a href="#education" onclick="toggleMobileMenu()" class="block text-sm font-medium text-slate-700 hover:text-emerald-600 py-1">การศึกษา</a>
+            <a href="#family" onclick="toggleMobileMenu()" class="block text-sm font-medium text-slate-700 hover:text-emerald-600 py-1">ครอบครัว</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-sm font-medium text-slate-700 hover:text-emerald-600 py-1">การติดต่อ</a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 flex-grow">
+
+        <section id="about" class="scroll-mt-24 pt-2">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 custom-shadow flex flex-col md:flex-row items-center gap-8 md:gap-12 relative overflow-hidden">
+                <!-- Minimal background shape -->
+                <div class="absolute -top-32 -right-32 w-80 h-80 bg-emerald-50 rounded-full blur-3xl opacity-70 pointer-events-none"></div>
+
+                <!-- Avatar Box -->
+                <div class="relative flex-shrink-0 group">
+                    <div class="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl p-1.5 gradient-accent shadow-xl shadow-emerald-500/15 transition-transform duration-300 group-hover:scale-[1.02]">
+                        <div class="w-full h-full rounded-[22px] bg-slate-100 flex flex-col items-center justify-center text-slate-300 overflow-hidden relative">
+                            <img id="profile-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23cbd5e1' viewBox='0 0 24 24'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="Nattika Phothong" class="w-full h-full object-cover rounded-[22px]">
+                        </div>
+                    </div>
+                    
+                    <!-- Change Picture Trigger -->
+                    <label for="img-input" class="absolute -bottom-2 -right-2 bg-slate-900 hover:bg-emerald-600 text-white p-3 rounded-2xl shadow-lg cursor-pointer transition-all hover:scale-110" title="อัปโหลดรูปภาพใหม่">
+                        <i class="fa-solid fa-camera text-xs"></i>
+                        <input type="file" id="img-input" class="hidden" accept="image/*" onchange="previewImage(event)">
+                    </label>
+
+                    <div class="absolute -top-2 -left-2 bg-emerald-100 text-emerald-800 text-[11px] font-bold px-3 py-1 rounded-xl border border-emerald-200">
+                        ปี 1
+                    </div>
+                </div>
+
+                <!-- Bio Content -->
+                <div class="flex-1 text-center md:text-left space-y-4">
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-emerald-700 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>สาขาวิชาสาธารณสุขชุมชน</span>
+                    </div>
+
+                    <div>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+                            นางสาวณัฐติกา โพทอง
+                        </h1>
+                        <p class="text-base sm:text-lg font-medium text-slate-500 mt-1">
+                            Nattika Phothong <span class="text-emerald-600 font-normal">(ชื่อเล่น: โยเย)</span>
+                        </p>
+                    </div>
+
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
+                        "ฉันเป็นนักศึกษา วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น คณะสาธารณสุขศาสตร์และสหเวชศาสตร์ มีความมุ่งมั่นในการเรียนรู้ พัฒนาทักษะด้านงานสาธารณสุขชุมชน เพื่อสุขภาวะที่ดีของสังคม"
+                    </p>
+
+                    <!-- Quick Key Badges -->
+                    <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-2.5">
+                        <div class="bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-droplet text-rose-500"></i>
+                            <span>กรุ๊ปเลือด A</span>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-cake-candles text-amber-500"></i>
+                            <span>อายุ 18 ปี</span>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                            <span>อ.ท่าคันโท จ.กาฬสินธุ์</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="pt-4 flex flex-wrap items-center justify-center md:justify-start gap-3">
+                        <a href="tel:0621054724" class="inline-flex items-center space-x-2 gradient-accent text-white text-xs sm:text-sm font-medium px-5 py-2.5 rounded-xl shadow-md shadow-emerald-500/10 hover:shadow-lg hover:opacity-95 transition-all">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>062-105-4724</span>
+                        </a>
+                        <button onclick="copyToClipboard('nattika217@gmail.com', 'คัดลอกอีเมลเรียบร้อยแล้ว')" class="inline-flex items-center space-x-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">
+                            <i class="fa-solid fa-envelope text-slate-500"></i>
+                            <span>nattika217@gmail.com</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="profile" class="scroll-mt-24 space-y-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-2 h-7 bg-emerald-600 rounded-full"></div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ประวัติส่วนตัว (Personal Details)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Info Card 1: General Info -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 custom-shadow custom-shadow-hover transition-all duration-300">
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 text-base">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800 mb-3 pb-2 border-b border-slate-100">ข้อมูลทั่วไป</h3>
+                    <ul class="space-y-3 text-xs sm:text-sm">
+                        <li class="flex justify-between"><span class="text-slate-400">ชื่อ-นามสกุล:</span> <span class="font-medium text-slate-800">นางสาวณัฐติกา โพทอง</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">ชื่อเล่น:</span> <span class="font-medium text-slate-800">โยเย</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">วัน/เดือน/ปีเกิด:</span> <span class="font-medium text-slate-800">5 กุมภาพันธ์ 2551</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">อายุ:</span> <span class="font-medium text-slate-800">18 ปี</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">หมู่เลือด:</span> <span class="font-semibold text-emerald-600">A</span></li>
+                    </ul>
+                </div>
+
+                <!-- Info Card 2: Nationality & Religion -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 custom-shadow custom-shadow-hover transition-all duration-300">
+                    <div class="w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4 text-base">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800 mb-3 pb-2 border-b border-slate-100">สัญชาติ & ศาสนา</h3>
+                    <ul class="space-y-3 text-xs sm:text-sm">
+                        <li class="flex justify-between"><span class="text-slate-400">เชื้อชาติ:</span> <span class="font-medium text-slate-800">ไทย</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">สัญชาติ:</span> <span class="font-medium text-slate-800">ไทย</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">ศาสนา:</span> <span class="font-medium text-slate-800">พุทธ</span></li>
+                        <li class="flex justify-between"><span class="text-slate-400">สถานภาพ:</span> <span class="font-medium text-slate-800">นักศึกษา</span></li>
+                    </ul>
+                </div>
+
+                <!-- Info Card 3: Address -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 custom-shadow custom-shadow-hover transition-all duration-300">
+                    <div class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center mb-4 text-base">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-800 mb-3 pb-2 border-b border-slate-100">ที่อยู่ปัจจุบัน</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        122 หมู่ 4 ตำบลยางอู้ม<br>
+                        อำเภอท่าคันโท จังหวัดกาฬสินธุ์<br>
+                        รหัสไปรษณีย์ 46190
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <a href="https://maps.google.com/?q=ยางอู้ม+ท่าคันโท+กาฬสินธุ์" target="_blank" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 inline-flex items-center space-x-1.5">
+                            <i class="fa-solid fa-map-pin"></i>
+                            <span>ดูตำแหน่งบนแผนที่ Google Maps</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="scroll-mt-24 space-y-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-2 h-7 bg-emerald-600 rounded-full"></div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ประวัติการศึกษา (Education)</h2>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 custom-shadow">
+                <div class="relative border-l-2 border-emerald-200 pl-6 sm:pl-8 space-y-6 my-2">
+                    <!-- Current Education Item -->
+                    <div class="relative">
+                        <!-- Timeline Dot -->
+                        <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-5 h-5 rounded-full border-4 border-white bg-emerald-600 shadow-md"></div>
+                        
+                        <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-100 space-y-2">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                    กำลังศึกษาอยู่ (ชั้นปีที่ 1)
+                                </span>
+                                <span class="text-xs text-slate-400 font-medium">สถาบันการศึกษาด้านสาธารณสุข</span>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-900">วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น</h3>
+                            <p class="text-sm font-semibold text-emerald-700">
+                                คณะสาธารณสุขศาสตร์และสหเวชศาสตร์
+                            </p>
+                            <p class="text-xs sm:text-sm text-slate-600">
+                                สาขาวิชาสาธารณสุขชุมชน
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Family Section -->
+            <section id="family" class="scroll-mt-24 space-y-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-2 h-7 bg-emerald-600 rounded-full"></div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ประวัติครอบครัว (Family)</h2>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 custom-shadow space-y-4">
+                    <!-- Father Info -->
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-4">
+                        <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 text-base">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <span class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">บิดา</span>
+                            <h3 class="text-base font-bold text-slate-800 truncate">นายวีรฒร์ ดำนา</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5"><i class="fa-solid fa-briefcase text-slate-400 mr-1.5 text-xs"></i>อาชีพ: รับจ้างทั่วไป</p>
+                            <a href="tel:0825360827" class="inline-flex items-center space-x-1.5 text-xs font-semibold text-emerald-600 mt-2 hover:underline">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>082-536-0827</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mother Info -->
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-4">
+                        <div class="w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center flex-shrink-0 text-base">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <span class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">มารดา</span>
+                            <h3 class="text-base font-bold text-slate-800 truncate">นางสาวรัชนี โพทอง</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5"><i class="fa-solid fa-briefcase text-slate-400 mr-1.5 text-xs"></i>อาชีพ: รับจ้างทั่วไป</p>
+                            <a href="tel:0835286084" class="inline-flex items-center space-x-1.5 text-xs font-semibold text-emerald-600 mt-2 hover:underline">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>083-528-6084</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hobbies & Lifestyle Section -->
+            <section class="space-y-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-2 h-7 bg-emerald-600 rounded-full"></div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">งานอดิเรก (Hobbies)</h2>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 custom-shadow flex flex-col justify-between h-[calc(100%-3rem)]">
+                    <p class="text-xs sm:text-sm text-slate-500 mb-4">
+                        กิจกรรมผ่อนคลายเพื่อส่งเสริมจินตนาการและพัฒนาศักยภาพการเรียนรู้
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-3 my-auto">
+                        <!-- Music -->
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center flex flex-col items-center justify-center space-y-2 group hover:border-emerald-200 transition-colors">
+                            <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-music"></i>
+                            </div>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-800">ฟังเพลง</span>
+                        </div>
+
+                        <!-- Movies -->
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center flex flex-col items-center justify-center space-y-2 group hover:border-teal-200 transition-colors">
+                            <div class="w-10 h-10 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-800">ดูหนัง</span>
+                        </div>
+
+                        <!-- Reading -->
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center flex flex-col items-center justify-center space-y-2 group hover:border-indigo-200 transition-colors">
+                            <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-800">อ่านหนังสือ</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-3 border-t border-slate-100 text-[11px] text-slate-400 text-center">
+                        <i class="fa-solid fa-heart text-rose-400 mr-1"></i> พัฒนาตนเองอย่างต่อเนื่องเพื่อสังคม
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section id="contact" class="scroll-mt-24">
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="text-emerald-400 font-semibold text-xs tracking-wider uppercase">Contact Channels</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-1 mb-3">ช่องทางการติดต่อ</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mb-8 leading-relaxed">
+                        ท่านสามารถติดต่อเพื่อสอบถามข้อมูล ประสานงาน หรือสื่อสารทางด้านการศึกษาและกิจกรรมสาธารณสุขได้ทางช่องทางเหล่านี้
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Facebook -->
+                        <a href="https://facebook.com" target="_blank" class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-4 rounded-2xl border border-white/10 transition-all flex flex-col items-center text-center space-y-2 group">
+                            <i class="fa-brands fa-facebook text-2xl text-blue-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="text-xs text-slate-400">Facebook</span>
+                            <span class="text-sm font-semibold text-white">ณัฐติกา</span>
+                        </a>
+
+                        <!-- Phone -->
+                        <div onclick="copyToClipboard('0621054724', 'คัดลอกเบอร์โทรศัพท์เรียบร้อยแล้ว')" class="cursor-pointer bg-white/10 hover:bg-white/20 backdrop-blur-md p-4 rounded-2xl border border-white/10 transition-all flex flex-col items-center text-center space-y-2 group">
+                            <i class="fa-solid fa-phone text-2xl text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="text-xs text-slate-400">โทรศัพท์</span>
+                            <span class="text-sm font-semibold text-white">062-105-4724</span>
+                        </div>
+
+                        <!-- Email -->
+                        <div onclick="copyToClipboard('nattika217@gmail.com', 'คัดลอกอีเมลเรียบร้อยแล้ว')" class="cursor-pointer bg-white/10 hover:bg-white/20 backdrop-blur-md p-4 rounded-2xl border border-white/10 transition-all flex flex-col items-center text-center space-y-2 group">
+                            <i class="fa-solid fa-envelope text-2xl text-teal-300 group-hover:scale-110 transition-transform"></i>
+                            <span class="text-xs text-slate-400">อีเมล</span>
+                            <span class="text-xs font-semibold text-white truncate max-w-full">nattika217@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="github-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-5 relative">
+            <button onclick="toggleGithubModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-lg">
+                    <i class="fa-brands fa-github"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">วิธีการอัปโหลดขึ้น GitHub Pages</h3>
+                    <p class="text-xs text-slate-500">ขั้นตอนง่ายๆ เพื่อเผยแพร่พอร์ตโฟลิโอของคุณสู่สาธารณะ</p>
+                </div>
+            </div>
+
+            <ol class="space-y-3 text-xs sm:text-sm text-slate-600 list-decimal list-inside">
+                <li class="pl-1">ลงชื่อเข้าใช้ <strong>GitHub.com</strong> แล้วกดสร้างคลังเก็บข้อมูลใหม่ (New Repository)</li>
+                <li class="pl-1">ตั้งชื่อ Repository เช่น <code class="bg-slate-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono">my-portfolio</code></li>
+                <li class="pl-1">ตั้งชื่อไฟล์โค้ดนี้ว่า <code class="bg-slate-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono">index.html</code></li>
+                <li class="pl-1">อัปโหลดไฟล์ <code class="bg-slate-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono">index.html</code> เข้ามาใน Repository</li>
+                <li class="pl-1">ไปที่เมนู <strong>Settings &gt; Pages</strong> ในหมวด Build and deployment เลือก Source เป็น <code class="bg-slate-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono">Deploy from a branch</code> และกดเลือก branch <code class="bg-slate-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono">main</code> แล้วกด Save</li>
+            </ol>
+
+            <div class="p-3 bg-emerald-50 text-emerald-800 text-xs rounded-2xl flex items-start space-x-2 border border-emerald-100">
+                <i class="fa-solid fa-circle-info text-emerald-600 mt-0.5"></i>
+                <span>ระบบจะประมวลผลประมาณ 1-2 นาที จากนั้นจะได้รับลิงก์เว็บไซต์แบบออนไลน์ฟรีทันที!</span>
+            </div>
+
+            <button onclick="toggleGithubModal()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs sm:text-sm transition-colors">
+                เข้าใจแล้ว
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200/80 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-6xl mx-auto px-4 space-y-2">
+            <p>© Academic Portfolio - ณัฐติกา โพทอง (Nattika Phothong)</p>
+            <p class="text-slate-400">วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyToClipboard(text, customMessage) {
+            const input = document.createElement('textarea');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+
+            showToast(customMessage || 'คัดลอกเรียบร้อยแล้ว!');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 2500);
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-img').src = e.target.result;
+                    showToast('อัปเดตรูปภาพโปรไฟล์เรียบร้อยแล้ว');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function toggleGithubModal() {
+            const modal = document.getElementById('github-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
